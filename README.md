@@ -13,3 +13,19 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+### step 3 - configuring the git
+
+```bash
+git init
+git add .
+git commit -m "message"
+git push origin main
+git pull origin main
+```
+
+### step 4 - pushing the code has src code error
+
+```
+git branch -m "main"
+```
