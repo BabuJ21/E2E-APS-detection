@@ -39,7 +39,7 @@ class DataValidation:
             drop_column_names = null_report[null_report>threshold].index
             
             logging.info(f"Columns to drop: {list(drop_column_names)}")
-            self.validation_error[report_key_name] = drop_column_names
+            self.validation_error[report_key_name] = list(drop_column_names)
             df.drop(list(drop_column_names),axis=1, inplace=True)
             
             #return None no columns left
@@ -129,15 +129,16 @@ class DataValidation:
 
             logging.info(f"Is all required columns present in train dataframe")
             train_df_columns_status = self.is_required_columns_exists(base_df=base_df, current_df=train_df,
-                                                                      report_key_name = "Missing_columns_within_train_dataset")
+                                        report_key_name = "Missing_columns_within_train_dataset")
             logging.info(f"Is all required columns present in test dataframe")
-            test_df_columns_status = self.is_required_columns_exists(base_df=base_df, current_df=test_df,report_key_name = "Missing_columns_within_test_dataset")
+            test_df_columns_status = self.is_required_columns_exists(base_df=base_df, current_df=test_df,
+                                        report_key_name = "Missing_columns_within_test_dataset")
 
             if train_df_columns_status:
-                logging.info(f"Is all columns are available in train dataframe hence detecting data drift")
+                logging.info(f"As all columns are available in train dataframe hence detecting data drift")
                 self.data_drift(base_df=base_df, current_df=train_df,report_key_name = "data_drift_within_train_dataset")
             if test_df_columns_status:
-                logging.info(f"Is all columns are available in test dataframe hence detecting data drift")
+                logging.info(f"As all columns are available in test dataframe hence detecting data drift")
                 self.data_drift(base_df=base_df, current_df=test_df,report_key_name = "data_drift_within_test_dataset")
 
             ## write the report
