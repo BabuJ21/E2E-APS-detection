@@ -3,6 +3,7 @@ from sensor.logger import logging
 from sensor.exception import SensorException
 from sensor.config import mongo_client
 import os, sys
+import yaml
 
 def get_collection_as_dataframe(database_name:str, collection_name:str)->pd.DataFrame:
     """
@@ -37,3 +38,13 @@ def write_yaml_file(file_path, data:dict):
 
     except Exception as e:
         raise SensorException(e, sys)
+
+def convert_columns_float(df:pd.DataFrame, exclude_columns:list):
+    try:    
+        for column in df.columns:
+            if column not in exclude_columns:
+                df[column] = df[column].astype('float')
+            return df
+    except Exception as e:
+        raise e
+
